@@ -240,7 +240,7 @@ function takeMessage() {
           valuediv.innerHTML = textareamsg.value;
 
           load_icon.style.display = "flex";
-      send_icon.style.display = "none";
+          send_icon.style.display = "none";
           let payload = {
             text: textareamsg.value,
             apiKey: "WQiUo1v5kE1mlohcufb2M_pfIy69VdvcqVZGCztT-pgrTeERsX2Or8cZor2iV_OoNwk8ZA.",
