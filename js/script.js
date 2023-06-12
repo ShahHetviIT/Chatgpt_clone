@@ -147,14 +147,14 @@ function takeMessage() {
           assistant
           </span>
           <div class="tt4"></div>
-        </div>
-        <button id="copytext" class="copybtn">
+          <button id="copytext" class="copybtn">
         <i id="copysymbol" class="copysym fa-solid fa-copy fa-lg" data-toggle="tooltip" data-placement="bottom" title="Copy"></i>
           <div id="copied" class="copiedtext">
             <i class="fa-solid fa-check fa-sm"></i>  
             <div>Copied!</div>        
           </div>
         </button>
+        </div>
       </div>`;
 
       messages1.appendChild(msgElement);
@@ -235,9 +235,67 @@ function takeMessage() {
           const valuediv = div.querySelector(".tt3");
           const textareamsg = div.querySelector(".msgTextarea");
           const twoButtons = div.querySelector(".twobuttons");
-         // const newdiv = div.querySelector(".tt4");
+          const newdiv = div.querySelector(".tt4");
 
           valuediv.innerHTML = textareamsg.value;
+
+          load_icon.style.display = "flex";
+      send_icon.style.display = "none";
+          let payload = {
+            text: textareamsg.value,
+            apiKey: "WQiUo1v5kE1mlohcufb2M_pfIy69VdvcqVZGCztT-pgrTeERsX2Or8cZor2iV_OoNwk8ZA.",
+          };
+        
+          let options = {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          };
+        
+          fetch("http://192.168.1.154:8989/api", options)
+                .then((response) => response.json())
+                .then((json) => {
+                  var jsonData = json.content;
+                  //SpeakBrowser(jsonData);
+                  console.log(json);
+        
+                  var lines = jsonData.split("\n\n");
+                  var lines1 = lines.map((line) => `${line}<br>`).join("");
+                  var nextlines = lines1.split("\n");
+                  var nextlines1 = nextlines
+                    .map((nextlines) => `${nextlines}<br>`)
+                    .join("<br>");
+                  var star = nextlines1.split("**");
+                  var stars1 = star.map((star) => `${star}`).join("*");
+        
+                  var extrastar = stars1.split("*");
+                  var extrastar1 = extrastar
+                    .map((extrastar) => `${extrastar}`)
+                    .join("");
+        
+                  var dash = extrastar1.split("`");
+                  var dash1 = dash.map((dash) => `${dash}`).join("");
+        
+                  var quest = dash1.split("?");
+                  var quest1 = quest.map((quest) => `${quest}?`).join("<br>");
+        
+                  let trimmedText = quest1.slice(0, -1);
+        
+                  var threedash = trimmedText.split("---");
+                  var threedash1 = threedash
+                    .map((threedash) => `${threedash}`)
+                    .join("");
+        
+                  var fiveline = threedash1.split("|||||");
+                  var fiveline1 = fiveline.map((fiveline) => `${fiveline}`).join("");
+                  console.log(fiveline1);
+                  newdiv.innerHTML = fiveline1;
+                  load_icon.style.display = "none"; // Hide the load icon
+                  send_icon.style.display = "flex";
+                });
 
           // const newtext = generateagain(textareamsg.value);
           // newdiv.innerHTML = newtext;
