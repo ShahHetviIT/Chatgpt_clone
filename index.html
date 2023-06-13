@@ -23,6 +23,8 @@
     />
     <link rel="stylesheet" href="css/style.css" />
 
+    <link rel="icon" type="image/x-icon" href="favicon/favicon-32x32.png">
+
     <title>API</title>
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /> -->
     <link
@@ -74,13 +76,20 @@
           </button>
         </div>
       </div>
+
+      <button id="scrollToTopBtn" class="scroll-btn">
+        <i class="fa-solid fa-arrow-up fa-sm" style="color: #000000"></i>
+      </button>
+      <button id="scrollToBottomBtn" class="scroll-btn">
+        <i class="fa-solid fa-arrow-down fa-sm" style="color: #000000"></i>
+      </button>
     </div>
 
     <div class="popupForm" id="popup">
       <div class="tt1">
         <b> Enter License Key </b>
         <button class="closebutton" onclick="closepopup();">
-          <i class="fa-solid fa-xmark fa-sm closeicon"></i>
+          <i  class="fa-solid fa-xmark fa-sm closeicon"></i>
         </button>
       </div>
       <div class="tt2">Enter Open AI API Key to unlock prompt features.</div>
@@ -92,7 +101,7 @@
         class="input-text1"
       />
       <button onclick="addKey();" class="buttons2">
-        <i class="fa-solid fa-check fa-sm"></i>
+        <i style="margin-top: 2px;" class="fa-solid fa-check fa-sm"></i>
 
         <div>Activate License</div>
       </button>
@@ -106,15 +115,17 @@
       </div>
     </div>
 
-    <button id="scrollToTopBtn" class="scroll-btn">
-      <i class="fa-solid fa-arrow-up fa-sm" style="color: #000000"></i>
-    </button>
-    <button id="scrollToBottomBtn" class="scroll-btn">
-      <i class="fa-solid fa-arrow-down fa-sm" style="color: #000000"></i>
-    </button>
+    <div id="copy-alert" class="copyalert">
+      <div>
+        <i class="fa-solid fa-clipboard-check fa-xl"></i>
+      </div>
+      <div>Copied to clipboard!</div>
+    </div>
+
 
     <script src="js/script.js"></script>
     <script src="js/firebase.js"></script>
+    <script src="js/speech.js"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 

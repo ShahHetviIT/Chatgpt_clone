@@ -5,16 +5,12 @@ let cardHide = document.getElementById("cards");
 let messages1 = document.getElementById("msgs");
 let send_icon = document.getElementById("sendicon");
 let load_icon = document.getElementById("loadicon");
-// let scrollUp = document.getElementById("scrollup");
-// let scrollDown = document.getElementById("scrolldown");
 var activateLicense = JSON.parse(localStorage.getItem("activatelicense")) || [];
 var isOpen = false;
 var clickOutsideTimeout;
 load_icon.style.display = "none";
 
 window.addEventListener("click", function (event) {
-  //var popup = document.getElementById("popup");
- // var settingsButton = document.querySelector(".settings button");
   console.log("click");
 
   if (!blure.contains(event.target) && !popup.contains(event.target)) {
@@ -22,14 +18,12 @@ window.addEventListener("click", function (event) {
     console.log("close");
   }
 });
-
-
 function autoResizeResponse() {
   const textareas = document.getElementsByClassName("msgTextarea");
   for (let i = 0; i < textareas.length; i++) {
     const textarea = textareas[i];
-    textarea.style.height = "auto"; // Reset the height to auto to correctly calculate the scroll height
-    textarea.style.height = textarea.scrollHeight + "px"; // Set the height to the scroll height of the content
+    textarea.style.height = "auto"; 
+    textarea.style.height = textarea.scrollHeight + "px"; 
   }
 }
 
@@ -47,7 +41,6 @@ function autoResize() {
     textarea.style.height = maxHeight + "px";
   } else {
     textarea.style.overflowY = "hidden";
-    textarea.style.paddingRight = "0";
   }
 }
 
@@ -64,7 +57,7 @@ function closepopup() {
   blure.classList.remove("blur_cont");
   inpKey.classList.remove("empty-textbox");
   blure.style.pointerEvents = "auto";
-
+  inpKey.value = "";
   isOpen = false;
 }
 
@@ -89,6 +82,8 @@ function addKey() {
     blure.style.pointerEvents = "auto";
     blure.classList.remove("blur_cont");
     inpKey.classList.remove("empty-textbox");
+    inpKey.style.background = "";
+    inpKey.value="";
   }
 }
 
@@ -163,12 +158,12 @@ function takeMessage() {
       var icon1 = msgElement.querySelector("#icn1");
       var icon2 = msgElement.querySelector("#icn2");
       var copytext1 = msgElement.querySelector("#copytext");
-      var copySymbol = msgElement.querySelector("#copysymbol");
-      var copiedText = msgElement.querySelector("#copied");
+      //var copySymbol = msgElement.querySelector("#copysymbol");
+      //var copiedText = msgElement.querySelector("#copied");
 
       const copybutton = document.getElementsByClassName("copybtn");
-      let previousCopiedText = null;
-      let previousCopySymbol = null;
+     // let previousCopiedText = null;
+      //let previousCopySymbol = null;
 
       for (let i = 0; i < copybutton.length; i++) {
         copybutton[i].addEventListener("click", function () {
@@ -183,19 +178,20 @@ function takeMessage() {
             .writeText(proper1)
             .then(() => {
               console.log("Copied:", proper1);
+              copyPopupAlert();
 
-              if (previousCopiedText && previousCopySymbol) {
+              /*if (previousCopiedText && previousCopySymbol) {
                 previousCopiedText.style.display = "none";
                 previousCopySymbol.style.display = "flex";
-              }
+              }*/
 
-              const copiedText = div.querySelector(".copiedtext");
-              const copySymbol = div.querySelector(".copysym");
-              copiedText.style.display = "flex";
-              copySymbol.style.display = "none";
+              //const copiedText = div.querySelector(".copiedtext");
+              //const copySymbol = div.querySelector(".copysym");
+              //copiedText.style.display = "flex";
+              //copySymbol.style.display = "flex";
 
-              previousCopiedText = copiedText;
-              previousCopySymbol = copySymbol;
+              //previousCopiedText = copiedText;
+              //previousCopySymbol = copySymbol;
             })
             .catch((error) => {
               console.error("Copy failed:", error);
@@ -212,7 +208,6 @@ function takeMessage() {
           const valuediv = div.querySelector(".tt3");
           const value = valuediv.innerHTML.trim();
           const textareamsg = div.querySelector(".msgTextarea");
-
           valuediv.style.display = "none";
           textareamsg.style.display = "flex";
 
@@ -236,16 +231,21 @@ function takeMessage() {
           const textareamsg = div.querySelector(".msgTextarea");
           const twoButtons = div.querySelector(".twobuttons");
           const newdiv = div.querySelector(".tt4");
-
+          var copytext1 = div.querySelector("#copytext");
+          newdiv.innerHTML = " ";
           valuediv.innerHTML = textareamsg.value;
 
-          load_icon.style.display = "flex";
-          send_icon.style.display = "none";
+          var icon1 = div.querySelector("#icn1");
+          var icon2 = div.querySelector("#icn2");
+          icon1.style.display = "flex";
+          icon2.style.display = "none";
+          copytext1.style.display = "none";
           let payload = {
             text: textareamsg.value,
-            apiKey: "WQiUo1v5kE1mlohcufb2M_pfIy69VdvcqVZGCztT-pgrTeERsX2Or8cZor2iV_OoNwk8ZA.",
+            apiKey:
+              textValue,
           };
-        
+          console.log(textValue);
           let options = {
             method: "POST",
             headers: {
@@ -254,48 +254,17 @@ function takeMessage() {
             },
             body: JSON.stringify(payload),
           };
-        
+
           fetch("http://192.168.1.154:8989/api", options)
-                .then((response) => response.json())
-                .then((json) => {
-                  var jsonData = json.content;
-                  //SpeakBrowser(jsonData);
-                  console.log(json);
-        
-                  var lines = jsonData.split("\n\n");
-                  var lines1 = lines.map((line) => `${line}<br>`).join("");
-                  var nextlines = lines1.split("\n");
-                  var nextlines1 = nextlines
-                    .map((nextlines) => `${nextlines}<br>`)
-                    .join("<br>");
-                  var star = nextlines1.split("**");
-                  var stars1 = star.map((star) => `${star}`).join("*");
-        
-                  var extrastar = stars1.split("*");
-                  var extrastar1 = extrastar
-                    .map((extrastar) => `${extrastar}`)
-                    .join("");
-        
-                  var dash = extrastar1.split("`");
-                  var dash1 = dash.map((dash) => `${dash}`).join("");
-        
-                  var quest = dash1.split("?");
-                  var quest1 = quest.map((quest) => `${quest}?`).join("<br>");
-        
-                  let trimmedText = quest1.slice(0, -1);
-        
-                  var threedash = trimmedText.split("---");
-                  var threedash1 = threedash
-                    .map((threedash) => `${threedash}`)
-                    .join("");
-        
-                  var fiveline = threedash1.split("|||||");
-                  var fiveline1 = fiveline.map((fiveline) => `${fiveline}`).join("");
-                  console.log(fiveline1);
-                  newdiv.innerHTML = fiveline1;
-                  load_icon.style.display = "none"; // Hide the load icon
-                  send_icon.style.display = "flex";
-                });
+            .then((response) => response.json())
+            .then((json) => {
+              var jsonData = json.content;
+              //SpeakBrowser(jsonData);
+              newdiv.innerHTML = properData(jsonData);
+              icon1.style.display = "none";
+              icon2.style.display = "flex";
+              copytext1.style.display = "flex";
+            });
 
           // const newtext = generateagain(textareamsg.value);
           // newdiv.innerHTML = newtext;
@@ -327,37 +296,8 @@ function takeMessage() {
           //SpeakBrowser(jsonData);
           console.log(json);
 
-          var lines = jsonData.split("\n\n");
-          var lines1 = lines.map((line) => `${line}<br>`).join("");
-          var nextlines = lines1.split("\n");
-          var nextlines1 = nextlines
-            .map((nextlines) => `${nextlines}<br>`)
-            .join("<br>");
-          var star = nextlines1.split("**");
-          var stars1 = star.map((star) => `${star}`).join("*");
+          tt4Div.innerHTML = properData(jsonData);
 
-          var extrastar = stars1.split("*");
-          var extrastar1 = extrastar
-            .map((extrastar) => `${extrastar}`)
-            .join("");
-
-          var dash = extrastar1.split("`");
-          var dash1 = dash.map((dash) => `${dash}`).join("");
-
-          var quest = dash1.split("?");
-          var quest1 = quest.map((quest) => `${quest}?`).join("<br>");
-
-          let trimmedText = quest1.slice(0, -1);
-
-          var threedash = trimmedText.split("---");
-          var threedash1 = threedash
-            .map((threedash) => `${threedash}`)
-            .join("");
-
-          var fiveline = threedash1.split("|||||");
-          var fiveline1 = fiveline.map((fiveline) => `${fiveline}`).join("");
-
-          tt4Div.innerHTML = fiveline1;
           load_icon.style.display = "none"; // Hide the load icon
           send_icon.style.display = "flex";
           if (document.getElementById("myTextarea").value.trim() == "") {
@@ -393,14 +333,6 @@ document.addEventListener("keyup", function (event) {
     send_icon.classList.add("sendiconafterwrite");
   }
 
-  if(inpKey.value==""){
-    inpKey.style.background = "";
-  }
-  else{
-    inpKey.style.background = "greenYellow";
-    inpKey.style.color = "black";
-  }
-
   if (event.key === "Enter" && load_icon.style.display == "none") {
     takeMessage();
     console.log("Enterkey");
@@ -423,62 +355,6 @@ function closealert() {
     $(".alert").addClass("hide");
   });
 }
-
-/*function generateagain(newtext){
-  let payload = {
-    text: newtext,
-    apiKey: "WQiUo1v5kE1mlohcufb2M_pfIy69VdvcqVZGCztT-pgrTeERsX2Or8cZor2iV_OoNwk8ZA.",
-  };
-
-  let options = {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  };
-
-  fetch("http://192.168.1.154:8989/api", options)
-        .then((response) => response.json())
-        .then((json) => {
-          var jsonData = json.content;
-          //SpeakBrowser(jsonData);
-          console.log(json);
-
-          var lines = jsonData.split("\n\n");
-          var lines1 = lines.map((line) => `${line}<br>`).join("");
-          var nextlines = lines1.split("\n");
-          var nextlines1 = nextlines
-            .map((nextlines) => `${nextlines}<br>`)
-            .join("<br>");
-          var star = nextlines1.split("**");
-          var stars1 = star.map((star) => `${star}`).join("*");
-
-          var extrastar = stars1.split("*");
-          var extrastar1 = extrastar
-            .map((extrastar) => `${extrastar}`)
-            .join("");
-
-          var dash = extrastar1.split("`");
-          var dash1 = dash.map((dash) => `${dash}`).join("");
-
-          var quest = dash1.split("?");
-          var quest1 = quest.map((quest) => `${quest}?`).join("<br>");
-
-          let trimmedText = quest1.slice(0, -1);
-
-          var threedash = trimmedText.split("---");
-          var threedash1 = threedash
-            .map((threedash) => `${threedash}`)
-            .join("");
-
-          var fiveline = threedash1.split("|||||");
-          var fiveline1 = fiveline.map((fiveline) => `${fiveline}`).join("");
-          console.log(fiveline1);
-          return fiveline1;
-        });
-}*/
 
 window.addEventListener("scroll", function () {
   var scrollToTopBtn = document.getElementById("scrollToTopBtn");
@@ -520,3 +396,44 @@ scrollToBottomBtn.addEventListener("click", function () {
     behavior: "smooth",
   });
 });
+
+function properData(jsonData) {
+  var lines = jsonData.split("\n\n");
+  var lines1 = lines.map((line) => `${line}<br>`).join("");
+  var nextlines = lines1.split("\n");
+  var nextlines1 = nextlines
+    .map((nextlines) => `${nextlines}<br>`)
+    .join("<br>");
+  var star = nextlines1.split("**");
+  var stars1 = star.map((star) => `${star}`).join("*");
+
+  var extrastar = stars1.split("*");
+  var extrastar1 = extrastar.map((extrastar) => `${extrastar}`).join("");
+
+  var dash = extrastar1.split("`");
+  var dash1 = dash.map((dash) => `${dash}`).join("");
+
+  var quest = dash1.split("?");
+  var quest1 = quest.map((quest) => `${quest}?`).join("<br>");
+
+  let trimmedText = quest1.slice(0, -1);
+
+  var threedash = trimmedText.split("---");
+  var threedash1 = threedash.map((threedash) => `${threedash}`).join("");
+
+  var fiveline = threedash1.split("|||||");
+  var fiveline1 = fiveline.map((fiveline) => `${fiveline}`).join("");
+
+  var standline = fiveline1.split("|");
+  var standline1 = standline.map((standline)=>`${standline}`).join("");
+  return standline1;
+}
+ function copyPopupAlert(){
+  let duration = 3000;
+  let copyAlert = document.getElementById("copy-alert");
+  copyAlert.classList.add("copy_popup");
+
+  setTimeout(() => {
+    copyAlert.classList.remove("copy_popup");
+  }, duration);
+ }
