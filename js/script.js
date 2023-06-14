@@ -22,8 +22,8 @@ function autoResizeResponse() {
   const textareas = document.getElementsByClassName("msgTextarea");
   for (let i = 0; i < textareas.length; i++) {
     const textarea = textareas[i];
-    textarea.style.height = "auto"; 
-    textarea.style.height = textarea.scrollHeight + "px"; 
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
   }
 }
 
@@ -83,7 +83,7 @@ function addKey() {
     blure.classList.remove("blur_cont");
     inpKey.classList.remove("empty-textbox");
     inpKey.style.background = "";
-    inpKey.value="";
+    inpKey.value = "";
   }
 }
 
@@ -127,7 +127,9 @@ function takeMessage() {
       msgElement.innerHTML = `
       <div class="msg">
         <div class="msgrw1">
+          <div>
           <i class="usericon fa-sharp fa-solid fa-circle-user fa-xl" style="color: #d1d1d1;"></i>
+          </div>
           <div class="tt3">${document.getElementById("myTextarea").value}</div>
           <textarea class="msgTextarea" oninput="autoResizeResponse()"></textarea>
           <button class="editbutton" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa-solid fa-pen-to-square fa-lg"></i></button>
@@ -137,22 +139,27 @@ function takeMessage() {
           <button class="cancel">Cancel</button>
         </div>
         <div class="msgrw2">
-          <i id="icn1" class="icon1 fa-solid fa-spinner fa-spin fa-xl" style="color: #d1d1d1;"></i>
-          <span id="icn2" class="icon2 material-symbols-outlined">
-          assistant
-          </span>
-          <div class="tt4"></div>
-          <button id="copytext" class="copybtn">
-        <i id="copysymbol" class="copysym fa-solid fa-copy fa-lg" data-toggle="tooltip" data-placement="bottom" title="Copy"></i>
-          <div id="copied" class="copiedtext">
-            <i class="fa-solid fa-check fa-sm"></i>  
-            <div>Copied!</div>        
+          <div>
+            <i id="icn1" class="icon1 fa-solid fa-spinner fa-spin fa-xl" style="color: #d1d1d1;"></i>
+            <span id="icn2" class="icon2 material-symbols-outlined">
+            assistant
+            </span>
           </div>
-        </button>
+          <div class="tt4"></div>
+          <div>
+            <button id="copytext" class="copybtn">
+            <i id="copysymbol" class="copysym fa-solid fa-copy fa-lg" data-toggle="tooltip" data-placement="bottom" title="Copy"></i>
+              <div id="copied" class="copiedtext">
+                <i class="fa-solid fa-check fa-sm"></i>  
+                <div>Copied!</div>        
+              </div>
+            </button>
+          </div>
         </div>
       </div>`;
 
       messages1.appendChild(msgElement);
+       SpeakBrowser(document.getElementById("myTextarea").value);
 
       var tt4Div = msgElement.querySelector(".tt4");
       var icon1 = msgElement.querySelector("#icn1");
@@ -162,12 +169,12 @@ function takeMessage() {
       //var copiedText = msgElement.querySelector("#copied");
 
       const copybutton = document.getElementsByClassName("copybtn");
-     // let previousCopiedText = null;
+      // let previousCopiedText = null;
       //let previousCopySymbol = null;
 
       for (let i = 0; i < copybutton.length; i++) {
         copybutton[i].addEventListener("click", function () {
-          const div = this.parentElement;
+          const div = this.parentElement.parentElement;
 
           const valuediv = div.querySelector(".tt4");
           const value = valuediv.innerHTML.trim();
@@ -242,8 +249,7 @@ function takeMessage() {
           copytext1.style.display = "none";
           let payload = {
             text: textareamsg.value,
-            apiKey:
-              textValue,
+            apiKey: textValue,
           };
           console.log(textValue);
           let options = {
@@ -259,8 +265,9 @@ function takeMessage() {
             .then((response) => response.json())
             .then((json) => {
               var jsonData = json.content;
-              //SpeakBrowser(jsonData);
+              SpeakBrowser(jsonData);
               newdiv.innerHTML = properData(jsonData);
+              Prism.highlightAll();
               icon1.style.display = "none";
               icon2.style.display = "flex";
               copytext1.style.display = "flex";
@@ -293,10 +300,11 @@ function takeMessage() {
         .then((response) => response.json())
         .then((json) => {
           var jsonData = json.content;
-          //SpeakBrowser(jsonData);
+          SpeakBrowser(jsonData);
           console.log(json);
 
           tt4Div.innerHTML = properData(jsonData);
+          Prism.highlightAll();
 
           load_icon.style.display = "none"; // Hide the load icon
           send_icon.style.display = "flex";
@@ -398,11 +406,11 @@ scrollToBottomBtn.addEventListener("click", function () {
 });
 
 function properData(jsonData) {
-  var lines = jsonData.split("\n\n");
-  var lines1 = lines.map((line) => `${line}<br>`).join("");
+  /*var lines = jsonData.split("\n\n");
+  var lines1 = lines.map((line) => `${line}`).join("");
   var nextlines = lines1.split("\n");
   var nextlines1 = nextlines
-    .map((nextlines) => `${nextlines}<br>`)
+    .map((nextlines) => `${nextlines}`)
     .join("<br>");
   var star = nextlines1.split("**");
   var stars1 = star.map((star) => `${star}`).join("*");
@@ -425,10 +433,16 @@ function properData(jsonData) {
   var fiveline1 = fiveline.map((fiveline) => `${fiveline}`).join("");
 
   var standline = fiveline1.split("|");
-  var standline1 = standline.map((standline)=>`${standline}`).join("");
-  return standline1;
+  var standline1 = standline.map((standline) => `${standline}`).join("");*/
+
+  const codeRegex = /```(\w+)\n([\s\S]+?)\n```/g;
+  return jsonData.replace(
+    codeRegex,
+    '<pre><code class="language-$1">$2</code></pre>'
+  );
 }
- function copyPopupAlert(){
+
+function copyPopupAlert() {
   let duration = 3000;
   let copyAlert = document.getElementById("copy-alert");
   copyAlert.classList.add("copy_popup");
@@ -436,4 +450,4 @@ function properData(jsonData) {
   setTimeout(() => {
     copyAlert.classList.remove("copy_popup");
   }, duration);
- }
+}

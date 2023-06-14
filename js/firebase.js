@@ -113,11 +113,10 @@ function getAllCategoryButton() {
     console.log("Category", data);
 
     var buttons = document.createElement("div");
-      buttons.className = "newbutton";
-      buttons.innerHTML = `
-        <button id="All" onclick="getButtonId(this);" type="button" class="btn btn-outline-light">All</button>`;
+    buttons.className = "newbutton";
+    buttons.innerHTML = `<button id="All" onclick="getButtonId(this);" type="submit" class="btn btn-outline-light">All</button>`;
 
-      newButtons.appendChild(buttons);
+    newButtons.appendChild(buttons);
 
     for (const key in data) {
       const category = data[key];

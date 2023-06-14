@@ -81,7 +81,7 @@ body::-webkit-scrollbar-track {
 }
 
 .container-fluid {
-  margin-bottom: 5.5%;
+  margin-bottom: 9%;
   margin-top: 50px;
   width: 100%;
   padding: 0;
@@ -361,7 +361,7 @@ body::-webkit-scrollbar-track {
 }
 
 .message {
-  margin-bottom: 6%;
+  margin-bottom: 9%;
   padding: 25px 0 20px;
   display: flex;
   flex-direction: column;
@@ -378,7 +378,7 @@ body::-webkit-scrollbar-track {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 25px;
 }
 
 .msgrw1 {
@@ -486,6 +486,7 @@ body::-webkit-scrollbar-track {
 }
 
 .copybtn {
+  padding: 0;
   display: none;
   background-color: transparent;
   border: none;
@@ -655,8 +656,6 @@ textarea::-webkit-scrollbar-track {
   outline: none;
   border: none;
   background-color: transparent;
-  position: absolute;
-  right: 5.6%;
 }
 
 .editbutton:focus {
@@ -668,9 +667,7 @@ textarea::-webkit-scrollbar-track {
 }
 
 .copysym {
-  position: absolute;
-  right: 5.6%;
-  margin-top: 16px;
+  margin-top: 12px;
   color: #d1d1d1;
 }
 
@@ -748,7 +745,7 @@ textarea::-webkit-scrollbar-track {
   font-size: 20px;
   padding: 0;
   width: 20px;
-  color: greenYellow;
+  color: #8c8c8c;
   border: none;
   outline: none;
   border-radius: 50%;
@@ -760,7 +757,7 @@ textarea::-webkit-scrollbar-track {
 }
 
 .closebutton:hover {
-  color: #92f200;
+  color: greenYellow;
 }
 
 .scroll-btn {
@@ -807,8 +804,6 @@ textarea::-webkit-scrollbar-track {
   border-radius: 5px;
   font-family: "DM SANS";
   line-height: 100%;
-  border-right: 11px solid #17B169;
-  border-left: 11px solid #17B169;
   top: -3px;
   transform: translate(-50%, -50%) scale(0.1);
   transition: transform 0.4s, top 0.4s;
@@ -822,7 +817,7 @@ textarea::-webkit-scrollbar-track {
 }
 
 #copy {
-  background-color: white;
+  background-color: #ffffff;
 }
 
 @media (max-width: 1200) {
@@ -911,10 +906,6 @@ textarea::-webkit-scrollbar-track {
   }
 }
 @media (max-width: 700px) {
-
-  body{
-    padding: 40px 4% 30px;
-  }
   .copyalert {
     font-size: 10px;
     gap: 8px;
@@ -1007,42 +998,23 @@ textarea::-webkit-scrollbar-track {
     gap: 6px;
     border-radius: 6px;
   }
-
-  .msgrw1{
-    gap: 10px;
-    font-size: 11px;
-  }
-
-  .msgrw2{
-    gap: 10px;
-    font-size: 11px;
-  }
-
-  #icn2 {
-    font-size: 19px;
 }
-
-body{
-  padding: 25px 4% 30px;
-}
-
+@media (min-width: 1450px) {
+  .btn {
+    font-size: 22px;
+  }
+  .msgrw1 {
+    font-size: 24px;
+    gap: 30px;
+  }
   .tt3 {
-    font-size: 12px;
-}
-
-.tt4 {
-  font-size: 12px;
-}
-
-.editbutton {
-  font-size: 12px;
-  right: 6.5%;
-}
-
-.copysym {
-  position: absolute;
-  right: 6.5%;
-  margin-top: 7px;
-  color: #d1d1d1;
-}
+    font-size: 25px;
+  }
+  .msgrw2 {
+    font-size: 24px;
+    gap: 30px;
+  }
+  .tt4 {
+    font-size: 25px;
+  }
 } /*# sourceMappingURL=style.css.map */
