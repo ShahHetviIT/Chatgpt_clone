@@ -451,3 +451,5 @@ function copyPopupAlert() {
     copyAlert.classList.remove("copy_popup");
   }, duration);
 }
+
+SpeakBrowser("hello");
